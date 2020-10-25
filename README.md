@@ -1,7 +1,7 @@
 # FSND-Capstone-Project
 Udacity Fullstack Nanodegree capstone project
 
-https://makhmud-capstone.com/
+https://makhmud-project-capstone.com/
 
 
 - The Stack
