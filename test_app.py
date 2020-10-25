@@ -59,7 +59,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertTrue(data['movies'])
         self.assertTrue(data['len_movies'])
 
-    def test_movies_by_using_id(self):
+    def test_get_movies_id(self):
         res = self.client().get('/movies/2', headers=self.producer)
         data = json.loads(res.data)
 
@@ -67,7 +67,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
         self.assertTrue(data['movies'])
 
-    def test_post_movies(self):
+    def test_post(self):
         res = self.client().get('/movies', json=new_movie, headers=self.producer)
         data = json.loads(res.data)
 
@@ -75,28 +75,28 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
         self.assertEqual(data['message'], 'The Movie is successfully created')
 
-    def test_post_movies_invalid(self):
-        new_movie_error = {
+    def test_post_m_invalid(self):
+        new_error = {
             'title': 'Gentlemen',
             'genre': 'Fantasy'
         }
-        res = self.client().post('/movies', json=new_movie_error, headers=self.producer)
+        res = self.client().post('/movies', json=new_error, headers=self.producer)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 422)
         self.assertEqual(data["success"], False)
         self.assertEqual(data["message"], "Unprocessable Request")
 
-    def test_delete_movie_by_id(self):
+    def test_delete_m_by_id(self):
         res = self.client().delete('/movies/5', headers=self.producer)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
-        self.assertEqual(data['message'], 'The Movie is successfully deleted')
+        self.assertTrue(data['message'])
 
     def test_invalid_delete_movies(self):
-        res = self.client().delete('/movies/me', headers=self.producer)
+        res = self.client().delete('/movies/makhmud', headers=self.producer)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 404)
@@ -104,7 +104,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'Not Found')
 
     def test_search_movie(self):
-        search_item = {'searchTerm': 'a'}
+        search_item = {'searchTerm': 'h'}
         res = self.client().post('/movies/search', json=search_item, headers=self.producer)
         data = json.loads(res.data)
 
@@ -123,8 +123,8 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data["message"], "Not Found")
 
     def test_patch_movie(self):
-        patch_title = {'title': 'Me'}
-        res = self.client().patch('/movies/4', json=patch_title, headers=self.producer)
+        patch_t = {'title': 'John Wick'}
+        res = self.client().patch('/movies/4', json=patch_t, headers=self.producer)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
@@ -132,8 +132,8 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'The Movie Successfully updated!')
 
     def test_patch_movie_invalid(self):
-        patch_title = {'err_title': 'Hello'}
-        res = self.client().patch('/movies/4', json=patch_title, headers=self.producer)
+        patch_t = {'err_title': 'Hello'}
+        res = self.client().patch('/movies/4', json=patch_t, headers=self.producer)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 422)
@@ -166,11 +166,11 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'The Actor is successfully created')
 
     def test_post_actors_invalid(self):
-        new_actor_error = {
-            'name': 'Jim Carrey',
-            'age': '34'
+        new_a_error = {
+            'name': 'Jhonme',
+            'age': '57'
         }
-        res = self.client().post('/actors', json=new_actor_error, headers=self.producer)
+        res = self.client().post('/actors', json=new_a_error, headers=self.producer)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 422)
@@ -213,7 +213,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data["message"], "Not Found")
 
     def test_patch_actor(self):
-        patch_title = {'name': 'Mr.Smith'}
+        patch_title = {'name': 'mac book pro'}
         res = self.client().patch('/actors/1', json=patch_title, headers=self.producer)
         data = json.loads(res.data)
 
@@ -222,8 +222,8 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['message'], 'The Actor Successfully updated!')
 
     def test_patch_actor_invalid(self):
-        patch_title = {'err_name': 'Hello'}
-        res = self.client().patch('/actors/1', json=patch_title, headers=self.producer)
+        patch_t = {'error_a_name': 'Hello'}
+        res = self.client().patch('/actors/1', json=patch_t, headers=self.producer)
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 422)
