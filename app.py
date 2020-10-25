@@ -1,6 +1,5 @@
 from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
-
 from models import setup_db, db_create_all, Movies, Actors
 from auth import requires_auth
 
